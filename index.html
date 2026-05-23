@@ -6,733 +6,150 @@
   <title>WE R WORSHIPER</title>
   <style>
     :root {
-      color-scheme: light;
       --navy: #0d263c;
-      --navy-2: #123e5d;
       --cyan: #05b9d6;
       --pink: #f72575;
-      --pink-dark: #dd155f;
       --ink: #102033;
       --muted: #66758a;
       --line: #e2e8f0;
       --surface: #f7f9fc;
-      --panel: #ffffff;
       --soft-cyan: #e8fbff;
       --soft-pink: #fff0f6;
-      --shadow: 0 12px 32px rgba(15, 23, 42, .08);
       font-family: "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+      color-scheme: light;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: var(--surface);
-      color: var(--ink);
-    }
-
-    button,
-    input,
-    select,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--surface); color: var(--ink); }
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; cursor: pointer; }
     .topbar {
-      height: 48px;
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 clamp(18px, 8vw, 330px);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      height: 52px; background: #fff; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      padding: 0 clamp(18px, 8vw, 330px); position: sticky; top: 0; z-index: 10;
     }
-
-    .logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: var(--ink);
-      font-weight: 900;
-      white-space: nowrap;
-    }
-
-    .logo-mark {
-      width: 38px;
-      height: 38px;
-      flex: 0 0 auto;
-      display: inline-block;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav a {
-      color: #5f6c7d;
-      text-decoration: none;
-      padding: 9px 13px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .nav a.active {
-      background: var(--soft-cyan);
-      color: #0098b2;
-    }
-
-    .hero {
-      min-height: 500px;
-      display: grid;
-      place-items: center;
-      padding: 58px 20px 74px;
-      background-color: var(--navy);
-      background-image:
-        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .15) 1px, transparent 0),
-        linear-gradient(100deg, rgba(15, 35, 62, .95), rgba(15, 71, 104, .92));
-      background-size: 32px 32px, auto;
-      color: #fff;
-    }
-
-    .hero-inner {
-      width: min(100%, 520px);
-    }
-
-    .eyebrow {
-      margin: 0 0 22px;
-      color: #00d2ee;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(45px, 6vw, 68px);
-      line-height: 1.18;
-      letter-spacing: 0;
-      font-weight: 950;
-    }
-
-    h1 strong {
-      color: #ff347d;
-      font-style: normal;
-    }
-
-    .hero p {
-      width: min(100%, 560px);
-      margin: 24px 0 32px;
-      color: #d6e2ef;
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    .hero-actions,
-    .actions,
-    .row-actions {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
+    .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 950; white-space: nowrap; }
+    .logo svg { width: 38px; height: 38px; flex: 0 0 auto; }
+    .nav { display: flex; align-items: center; gap: 10px; }
+    .nav a { color: #5f6c7d; text-decoration: none; padding: 9px 13px; border-radius: 4px; font-size: 14px; font-weight: 850; }
+    .nav a.active { background: var(--soft-cyan); color: #0098b2; }
     .btn {
-      min-height: 40px;
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 16px;
-      font-weight: 900;
-      white-space: nowrap;
+      min-height: 40px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 10px 16px; font-weight: 900; white-space: nowrap; text-decoration: none;
     }
-
-    .btn-primary {
-      background: var(--pink);
-      color: #fff;
-      box-shadow: 0 8px 20px rgba(247, 37, 117, .28);
+    .btn-primary { background: var(--pink); color: #fff; box-shadow: 0 8px 20px rgba(247, 37, 117, .28); }
+    .btn-primary:hover { background: #dd155f; }
+    .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.35); }
+    .btn-soft { background: #eef8fb; color: #008da7; }
+    .btn-ghost { background: #fff; border: 1px solid var(--line); color: #385064; }
+    .btn-danger { background: var(--soft-pink); color: #dd155f; }
+    .hero {
+      min-height: 500px; display: grid; place-items: center; padding: 58px 20px 74px; color: #fff;
+      background-color: var(--navy);
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0),
+        linear-gradient(100deg, rgba(15,35,62,.95), rgba(15,71,104,.92));
+      background-size: 32px 32px, auto;
     }
-
-    .btn-primary:hover {
-      background: var(--pink-dark);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, .35);
-    }
-
-    .btn-soft {
-      background: #eef8fb;
-      color: #008da7;
-    }
-
-    .btn-ghost {
-      background: transparent;
-      border: 1px solid var(--line);
-      color: #385064;
-    }
-
-    .btn-danger {
-      background: var(--soft-pink);
-      color: var(--pink-dark);
-    }
-
-    .stats {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
-      box-shadow: 0 2px 8px rgba(15, 23, 42, .04);
-    }
-
-    .stats-inner {
-      width: min(100%, 1220px);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .stat {
-      min-height: 88px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px 24px;
-    }
-
-    .stat + .stat {
-      border-left: 1px solid var(--line);
-    }
-
-    .stat-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      display: grid;
-      place-items: center;
-      font-weight: 950;
-      font-size: 20px;
-    }
-
-    .stat:first-child .stat-icon {
-      background: var(--soft-cyan);
-      color: var(--cyan);
-    }
-
-    .stat:last-child .stat-icon {
-      background: var(--soft-pink);
-      color: var(--pink);
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .stat-value {
-      margin-top: 2px;
-      color: var(--cyan);
-      font-size: 26px;
-      line-height: 1;
-      font-weight: 950;
-    }
-
-    .stat:last-child .stat-value {
-      color: var(--pink);
-    }
-
+    .hero-inner { width: min(100%, 520px); }
+    .eyebrow { margin: 0 0 22px; color: #00d2ee; font-weight: 950; }
+    h1 { margin: 0; font-size: clamp(45px, 6vw, 68px); line-height: 1.18; font-weight: 950; letter-spacing: 0; }
+    h1 strong { color: #ff347d; font-style: normal; }
+    .hero p:not(.eyebrow) { margin: 24px 0 32px; color: #d6e2ef; font-size: 18px; line-height: 1.7; }
+    .actions, .hero-actions, .row-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .stats { background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 2px 8px rgba(15,23,42,.04); }
+    .stats-inner { width: min(100%, 1220px); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; }
+    .stat { min-height: 88px; display: flex; align-items: center; gap: 16px; padding: 18px 24px; }
+    .stat + .stat { border-left: 1px solid var(--line); }
+    .stat-icon { width: 40px; height: 40px; border-radius: 6px; display: grid; place-items: center; font-weight: 950; font-size: 20px; }
+    .stat:first-child .stat-icon { background: var(--soft-cyan); color: var(--cyan); }
+    .stat:last-child .stat-icon { background: var(--soft-pink); color: var(--pink); }
+    .stat-label { color: var(--muted); font-size: 13px; font-weight: 850; }
+    .stat-value { margin-top: 2px; color: var(--cyan); font-size: 26px; line-height: 1; font-weight: 950; }
+    .stat:last-child .stat-value { color: var(--pink); }
     .workspace {
-      width: min(100%, 1220px);
-      margin: 0 auto;
-      padding: 48px 20px 70px;
-      display: grid;
-      grid-template-columns: 230px minmax(0, 1fr) 320px;
-      gap: 32px;
-      align-items: start;
+      width: min(100%, 1220px); margin: 0 auto; padding: 48px 20px 70px;
+      display: grid; grid-template-columns: 230px minmax(0,1fr) 320px; gap: 32px; align-items: start;
     }
-
-    .sidebar,
-    .setlist-panel {
-      display: grid;
-      gap: 24px;
-    }
-
-    .filter-block {
-      display: grid;
-      gap: 12px;
-    }
-
-    .filter-title {
-      color: #44546a;
-      font-size: 14px;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .search-box {
-      position: relative;
-    }
-
-    .search-box span {
-      position: absolute;
-      left: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #8793a4;
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 5px;
-      background: #fff;
-      color: var(--ink);
-      outline: 0;
-      padding: 11px 12px;
-    }
-
-    .search-box input {
-      padding-left: 38px;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, .08);
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(5, 185, 214, .14);
-    }
-
-    label {
-      display: grid;
-      gap: 7px;
-      color: #31445a;
-      font-size: 13px;
-      font-weight: 900;
-    }
-
-    textarea {
-      min-height: 84px;
-      resize: vertical;
-    }
-
-    .tag-list,
-    .key-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag,
-    .key-chip,
-    .pill {
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #fff;
-      color: #526178;
-      padding: 6px 10px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-
-    .tag.active,
-    .key-chip.active {
-      border-color: var(--cyan);
-      background: var(--cyan);
-      color: #fff;
-    }
-
-    .content-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 20px;
-      border-bottom: 1px solid var(--line);
-      padding-bottom: 16px;
-    }
-
-    h2 {
-      margin: 0;
-      font-size: 21px;
-      letter-spacing: 0;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .count-text {
-      color: #6b7788;
-      font-size: 14px;
-    }
-
-    .sort-row {
-      display: grid;
-      grid-template-columns: 1fr 150px;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .song-board {
-      display: grid;
-      gap: 28px;
-    }
-
-    .code-head {
-      margin: 0 0 14px;
-      color: #203b56;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 17px;
-    }
-
-    .code-badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: inline-grid;
-      place-items: center;
-      background: #e8fbff;
-      color: #0098b2;
-      font-weight: 950;
-    }
-
-    .song-list {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
-    .song-card {
-      min-height: 250px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      overflow: hidden;
-      background: #fff;
-      box-shadow: 0 1px 2px rgba(15, 23, 42, .03);
-      display: grid;
-      grid-template-rows: 138px 1fr;
-    }
-
-    .thumb {
-      background: #f1f3f7;
-      border-bottom: 1px solid var(--line);
-      display: grid;
-      place-items: center;
-      color: #bdc5d2;
-      text-align: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .thumb iframe {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      pointer-events: none;
-      background: #fff;
-    }
-
-    .thumb-placeholder {
-      display: grid;
-      gap: 8px;
-      justify-items: center;
-      font-weight: 900;
-      font-size: 13px;
-    }
-
-    .thumb-placeholder strong {
-      font-size: 46px;
-      line-height: 1;
-    }
-
-    .song-body {
-      display: grid;
-      gap: 10px;
-      padding: 14px;
-    }
-
-    .song-name {
-      font-size: 16px;
-      font-weight: 950;
-      line-height: 1.25;
-      overflow-wrap: anywhere;
-    }
-
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .song-memo {
-      color: #6d7888;
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .setlist-card,
-    .preview-card {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .panel-head {
-      padding: 16px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .panel-body {
-      padding: 16px;
-      display: grid;
-      gap: 14px;
-    }
-
-    .set-summary {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .setlist {
-      display: grid;
-      gap: 10px;
-    }
-
-    .set-card {
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      padding: 12px;
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 10px;
-      background: #fff;
-    }
-
-    .set-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      background: var(--pink);
-      color: #fff;
-      font-weight: 950;
-    }
-
-    .set-card .row-actions {
-      grid-column: 2;
-    }
-
-    .preview-frame {
-      height: 360px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      background: #f7f9fc;
-    }
-
-    .preview-frame iframe,
-    .preview-frame img {
-      width: 100%;
-      height: 100%;
-      border: 0;
-      object-fit: contain;
-      background: #fff;
-    }
-
-    .empty {
-      padding: 28px 16px;
-      text-align: center;
-      color: #8a96a8;
-      line-height: 1.5;
-      font-size: 14px;
-    }
-
-    .dialog-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(7, 18, 31, .5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 30;
-    }
-
-    .dialog-backdrop.open {
-      display: flex;
-    }
-
-    .dialog {
-      width: min(100%, 620px);
-      max-height: calc(100vh - 40px);
-      overflow: auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 30px 70px rgba(0, 0, 0, .25);
-    }
-
-    .dialog-head {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
-
-    .dialog h3 {
-      margin: 0;
-      font-size: 20px;
-    }
-
-    .form {
-      display: grid;
-      gap: 14px;
-      padding: 20px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .file-drop {
-      border: 1px dashed #a8b7c8;
-      border-radius: 7px;
-      padding: 14px;
-      background: #f8fbff;
-    }
-
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 20px;
-      transform: translateX(-50%);
-      background: #102033;
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 5px;
-      font-weight: 900;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .2s ease, transform .2s ease;
-      z-index: 40;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, -6px);
-    }
-
+    .sidebar, .setlist-panel { display: grid; gap: 24px; }
+    .filter-block { display: grid; gap: 12px; }
+    .filter-title { color: #44546a; font-size: 14px; font-weight: 900; display: flex; align-items: center; gap: 8px; }
+    .search-box { position: relative; }
+    .search-box span { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #8793a4; }
+    input, select, textarea { width: 100%; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); outline: 0; padding: 11px 12px; }
+    .search-box input { padding-left: 38px; box-shadow: 0 2px 6px rgba(15,23,42,.08); }
+    input:focus, select:focus, textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(5,185,214,.14); }
+    label { display: grid; gap: 7px; color: #31445a; font-size: 13px; font-weight: 900; }
+    textarea { min-height: 84px; resize: vertical; }
+    .tag-list, .key-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag, .key-chip, .pill { border-radius: 999px; border: 1px solid var(--line); background: #fff; color: #526178; padding: 6px 10px; font-size: 12px; font-weight: 900; }
+    .tag.active, .key-chip.active { border-color: var(--cyan); background: var(--cyan); color: #fff; }
+    .content-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+    h2 { margin: 0; font-size: 21px; letter-spacing: 0; display: flex; align-items: center; gap: 8px; }
+    .count-text { color: #6b7788; font-size: 14px; }
+    .sort-row { display: grid; grid-template-columns: 1fr 150px; gap: 10px; margin-bottom: 20px; }
+    .song-board { display: grid; gap: 28px; }
+    .code-head { margin: 0 0 14px; color: #203b56; display: flex; align-items: center; gap: 10px; font-size: 17px; }
+    .code-badge { width: 34px; height: 34px; border-radius: 50%; display: inline-grid; place-items: center; background: #e8fbff; color: #0098b2; font-weight: 950; }
+    .song-list { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; }
+    .song-card { min-height: 250px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 1px 2px rgba(15,23,42,.03); display: grid; grid-template-rows: 138px 1fr; }
+    .thumb { background: #f1f3f7; border-bottom: 1px solid var(--line); display: grid; place-items: center; color: #bdc5d2; text-align: center; overflow: hidden; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-placeholder { display: grid; gap: 8px; justify-items: center; font-weight: 900; font-size: 13px; }
+    .thumb-placeholder strong { font-size: 46px; line-height: 1; }
+    .song-body { display: grid; gap: 10px; padding: 14px; }
+    .song-name { font-size: 16px; font-weight: 950; line-height: 1.25; overflow-wrap: anywhere; }
+    .meta { display: flex; flex-wrap: wrap; gap: 6px; color: var(--muted); font-size: 12px; }
+    .song-memo { color: #6d7888; font-size: 13px; line-height: 1.45; }
+    .setlist-card, .preview-card, .community-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(15,23,42,.08); overflow: hidden; }
+    .panel-head { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel-body { padding: 16px; display: grid; gap: 14px; }
+    .set-summary { display: flex; flex-wrap: wrap; gap: 8px; }
+    .setlist { display: grid; gap: 10px; }
+    .set-card { border: 1px solid var(--line); border-radius: 7px; padding: 12px; display: grid; grid-template-columns: auto 1fr; gap: 10px; background: #fff; }
+    .set-number { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--pink); color: #fff; font-weight: 950; }
+    .set-card .row-actions { grid-column: 2; }
+    .preview-frame { height: 360px; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; display: grid; place-items: center; background: #f7f9fc; }
+    .preview-frame iframe, .preview-frame img { width: 100%; height: 100%; border: 0; object-fit: contain; background: #fff; }
+    .empty { padding: 28px 16px; text-align: center; color: #8a96a8; line-height: 1.5; font-size: 14px; }
+    .dialog-backdrop { position: fixed; inset: 0; background: rgba(7,18,31,.5); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 30; }
+    .dialog-backdrop.open { display: flex; }
+    .dialog { width: min(100%, 620px); max-height: calc(100vh - 40px); overflow: auto; background: #fff; border-radius: 8px; box-shadow: 0 30px 70px rgba(0,0,0,.25); }
+    .dialog-head { padding: 18px 20px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .dialog h3 { margin: 0; font-size: 20px; }
+    .form { display: grid; gap: 14px; padding: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .file-drop { border: 1px dashed #a8b7c8; border-radius: 7px; padding: 14px; background: #f8fbff; }
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.45; }
+    .community-card { margin-top: 28px; }
+    .community-form { display: grid; gap: 12px; }
+    .community-posts { display: grid; gap: 12px; }
+    .community-post { border: 1px solid var(--line); border-radius: 7px; padding: 12px; background: #fff; display: grid; gap: 8px; }
+    .post-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
+    .post-author { color: var(--ink); font-weight: 950; }
+    .post-message { line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: #102033; color: #fff; padding: 10px 14px; border-radius: 5px; font-weight: 900; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 40; }
+    .toast.show { opacity: 1; transform: translate(-50%, -6px); }
     @media (max-width: 1180px) {
-      .topbar {
-        padding: 0 20px;
-      }
-
-      .workspace {
-        grid-template-columns: 220px minmax(0, 1fr);
-      }
-
-      .setlist-panel {
-        grid-column: 1 / -1;
-        grid-template-columns: 1fr 1fr;
-      }
+      .topbar { padding: 0 20px; }
+      .workspace { grid-template-columns: 220px minmax(0,1fr); }
+      .setlist-panel { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
     }
-
     @media (max-width: 820px) {
-      .topbar {
-        height: auto;
-        padding: 10px 16px;
-        align-items: flex-start;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .nav {
-        order: 3;
-        width: 100%;
-      }
-
-      .hero {
-        min-height: 390px;
-        place-items: start;
-        padding: 48px 18px;
-      }
-
-      .stats-inner,
-      .workspace,
-      .setlist-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .stat + .stat {
-        border-left: 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .song-list,
-      .sort-row,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .content-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+      .topbar { height: auto; padding: 10px 16px; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+      .nav { order: 3; width: 100%; overflow: auto; }
+      .hero { min-height: 390px; place-items: start; padding: 48px 18px; }
+      .stats-inner, .workspace, .setlist-panel { grid-template-columns: 1fr; }
+      .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
+      .song-list, .sort-row, .grid-2 { grid-template-columns: 1fr; }
+      .content-head { align-items: flex-start; flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="logo">
-      <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
-        <circle cx="32" cy="32" r="27" fill="#ffffff" stroke="#09a7a7" stroke-width="5"/>
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="27" fill="#fff" stroke="#09a7a7" stroke-width="5"/>
         <circle cx="32" cy="32" r="20" fill="none" stroke="#cf3f93" stroke-width="3" opacity=".9"/>
         <text x="32" y="42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="31" font-weight="950" fill="#102033">R</text>
       </svg>
@@ -742,6 +159,7 @@
       <a class="active" href="#home">홈</a>
       <a href="#scores">코드별 보기</a>
       <a href="#setlist">예배 콘티</a>
+      <a href="#community">커뮤니티</a>
     </nav>
     <button class="btn btn-primary" id="openUploadTop" type="button">↥ 악보 올리기</button>
   </header>
@@ -760,20 +178,8 @@
 
   <section class="stats" aria-label="사이트 현황">
     <div class="stats-inner">
-      <div class="stat">
-        <span class="stat-icon">♪</span>
-        <div>
-          <div class="stat-label">공유된 악보</div>
-          <div class="stat-value" id="statSongs">0</div>
-        </div>
-      </div>
-      <div class="stat">
-        <span class="stat-icon">↓</span>
-        <div>
-          <div class="stat-label">콘티에 담긴 곡</div>
-          <div class="stat-value" id="statSetlist">0</div>
-        </div>
-      </div>
+      <div class="stat"><span class="stat-icon">♪</span><div><div class="stat-label">공유된 악보</div><div class="stat-value" id="statSongs">0</div></div></div>
+      <div class="stat"><span class="stat-icon">↓</span><div><div class="stat-label">콘티에 담긴 곡</div><div class="stat-value" id="statSetlist">0</div></div></div>
     </div>
   </section>
 
@@ -781,12 +187,8 @@
     <aside class="sidebar">
       <div class="filter-block">
         <div class="filter-title">⌕ 검색</div>
-        <div class="search-box">
-          <span>⌕</span>
-          <input id="search" placeholder="곡명, 주제, 메모...">
-        </div>
+        <div class="search-box"><span>⌕</span><input id="search" placeholder="곡명, 주제, 메모..."></div>
       </div>
-
       <div class="filter-block">
         <div class="filter-title">▽ 인기 태그</div>
         <div class="tag-list">
@@ -797,7 +199,6 @@
           <button class="tag" type="button" data-theme="헌신">헌신</button>
         </div>
       </div>
-
       <div class="filter-block">
         <div class="filter-title">♬ 코드</div>
         <div class="key-list" id="keyChips"></div>
@@ -805,123 +206,82 @@
     </aside>
 
     <main id="scores">
-      <div class="content-head">
-        <h2>▤ 전체 악보</h2>
-        <span class="count-text" id="songCount">총 0개</span>
-      </div>
+      <div class="content-head"><h2>▤ 전체 악보</h2><span class="count-text" id="songCount">총 0개</span></div>
       <div class="sort-row">
-        <select id="keyFilter">
-          <option value="all">전체 코드</option>
-        </select>
-        <select id="sortBy">
-          <option value="key">코드순</option>
-          <option value="title">제목순</option>
-          <option value="recent">최근 추가순</option>
-        </select>
+        <select id="keyFilter"><option value="all">전체 코드</option></select>
+        <select id="sortBy"><option value="key">코드순</option><option value="title">제목순</option><option value="recent">최근 추가순</option></select>
       </div>
       <section class="song-board" id="songBoard"></section>
+      <section class="community-card" id="community">
+        <div class="panel-head">
+          <div>
+            <h2>커뮤니티</h2>
+            <div class="hint">찬양팀과 나눌 공지, 요청, 준비 메모를 남겨보세요.</div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form class="community-form" id="communityForm">
+            <div class="grid-2">
+              <label>이름<input id="communityName" placeholder="예: 찬양팀"></label>
+              <label>분류
+                <select id="communityTopic">
+                  <option>공지</option>
+                  <option>요청</option>
+                  <option>기도제목</option>
+                  <option>나눔</option>
+                </select>
+              </label>
+            </div>
+            <label>내용<textarea id="communityMessage" required placeholder="함께 나눌 내용을 적어주세요."></textarea></label>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">글 남기기</button>
+              <button class="btn btn-ghost" id="clearCommunity" type="button">글 모두 지우기</button>
+            </div>
+            <div class="hint">현재 버전의 커뮤니티 글은 이 브라우저에 저장됩니다.</div>
+          </form>
+          <div class="community-posts" id="communityPosts"></div>
+        </div>
+      </section>
     </main>
 
     <aside class="setlist-panel" id="setlist">
       <section class="setlist-card">
-        <div class="panel-head">
-          <h2>예배 콘티</h2>
-          <button class="btn btn-ghost" id="clearSetlist" type="button">비우기</button>
-        </div>
+        <div class="panel-head"><h2>예배 콘티</h2><button class="btn btn-ghost" id="clearSetlist" type="button">비우기</button></div>
         <div class="panel-body">
-          <label>
-            예배 이름
-            <input id="serviceName" placeholder="예: 주일 2부 예배">
-          </label>
-          <div class="set-summary" id="setSummary">
-            <span class="pill">0곡</span>
-            <span class="pill">BPM 미입력</span>
-          </div>
+          <label>예배 이름<input id="serviceName" placeholder="예: 주일 2부 예배"></label>
+          <div class="set-summary" id="setSummary"><span class="pill">0곡</span></div>
           <div class="actions">
-            <button class="btn btn-primary" id="exportSetlist" type="button">콘티 복사</button>
+            <button class="btn btn-primary" id="downloadSetlist" type="button">콘티 악보 다운로드</button>
+            <button class="btn btn-soft" id="exportSetlist" type="button">콘티 복사</button>
             <button class="btn btn-danger" id="clearAll" type="button">전체 비우기</button>
           </div>
           <div class="setlist" id="setlistItems"></div>
         </div>
       </section>
-
       <section class="preview-card">
-        <div class="panel-head">
-          <div>
-            <h2 id="previewTitle">악보 미리보기</h2>
-            <div class="hint" id="previewMeta">악보를 선택하면 바로 볼 수 있습니다.</div>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div class="preview-frame" id="previewFrame">
-            <div class="empty">아직 선택한 악보가 없습니다.</div>
-          </div>
-        </div>
+        <div class="panel-head"><div><h2 id="previewTitle">악보 미리보기</h2><div class="hint" id="previewMeta">악보를 선택하면 바로 볼 수 있습니다.</div></div></div>
+        <div class="panel-body"><div class="preview-frame" id="previewFrame"><div class="empty">아직 선택한 악보가 없습니다.</div></div></div>
       </section>
     </aside>
   </div>
 
   <div class="dialog-backdrop" id="uploadDialog" aria-hidden="true">
     <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="uploadTitle">
-      <div class="dialog-head">
-        <h3 id="uploadTitle">악보 올리기</h3>
-        <button class="btn btn-ghost" id="closeUpload" type="button">닫기</button>
-      </div>
+      <div class="dialog-head"><h3 id="uploadTitle">악보 올리기</h3><button class="btn btn-ghost" id="closeUpload" type="button">닫기</button></div>
       <form class="form" id="songForm">
-        <label>
-          곡 제목
-          <input id="title" required placeholder="예: 주님의 은혜 넘치네">
-        </label>
+        <input id="editingId" type="hidden">
+        <label>곡 제목<input id="title" required placeholder="예: 주님의 은혜 넘치네"></label>
         <div class="grid-2">
-          <label>
-            코드
-            <select id="key">
-              <option>C</option>
-              <option>Db</option>
-              <option>D</option>
-              <option>Eb</option>
-              <option>E</option>
-              <option>F</option>
-              <option>Gb</option>
-              <option>G</option>
-              <option>Ab</option>
-              <option>A</option>
-              <option>Bb</option>
-              <option>B</option>
-            </select>
-          </label>
-          <label>
-            BPM
-            <input id="bpm" type="number" min="40" max="240" placeholder="예: 72">
-          </label>
+          <label>코드<select id="key"><option>C</option><option>Db</option><option>D</option><option>Eb</option><option>E</option><option>F</option><option>Gb</option><option>G</option><option>Ab</option><option>A</option><option>Bb</option><option>B</option></select></label>
+          <label>난이도<select id="level"><option>쉬움</option><option selected>보통</option><option>어려움</option></select></label>
         </div>
-        <div class="grid-2">
-          <label>
-            절기/주제
-            <input id="theme" placeholder="예: 감사, 예배, 성탄">
-          </label>
-          <label>
-            난이도
-            <select id="level">
-              <option>쉬움</option>
-              <option selected>보통</option>
-              <option>어려움</option>
-            </select>
-          </label>
-        </div>
-        <label>
-          메모
-          <textarea id="memo" placeholder="인트로, 브릿지 반복, 싱어 참고 사항 등"></textarea>
+        <label>절기/주제<input id="theme" placeholder="예: 감사, 예배, 성탄"></label>
+        <label>메모<textarea id="memo" placeholder="인트로, 브릿지 반복, 싱어 참고 사항 등"></textarea></label>
+        <label class="file-drop">PDF 또는 이미지 악보
+          <input id="scoreFile" type="file" accept="application/pdf,image/*">
+          <span class="hint" id="fileHint">파일은 이 브라우저에 저장됩니다. 수정할 때 새 파일을 고르지 않으면 기존 악보 파일이 유지됩니다.</span>
         </label>
-        <label class="file-drop">
-          PDF 또는 이미지 악보
-          <input id="scoreFile" type="file" accept="application/pdf,image/*" required>
-          <span class="hint">파일은 이 브라우저에 저장됩니다. 중요한 파일은 원본을 따로 보관해 주세요.</span>
-        </label>
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">악보 추가</button>
-          <button class="btn btn-ghost" id="cancelUpload" type="button">취소</button>
-        </div>
+        <div class="actions"><button class="btn btn-primary" id="submitSong" type="submit">악보 추가</button><button class="btn btn-ghost" id="cancelUpload" type="button">취소</button></div>
       </form>
     </section>
   </div>
@@ -931,14 +291,8 @@
   <script>
     const KEY_ORDER = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const STORAGE_KEY = "worship-score-board";
-    const state = {
-      songs: [],
-      setlist: [],
-      selectedId: null,
-      serviceName: "",
-      themeFilter: "all"
-    };
-
+    const COMMUNITY_KEY = "worship-community-posts";
+    const state = { songs: [], setlist: [], selectedId: null, serviceName: "", themeFilter: "all", communityPosts: [] };
     const $ = (selector) => document.querySelector(selector);
     const songBoard = $("#songBoard");
     const setlistEl = $("#setlistItems");
@@ -947,11 +301,12 @@
     const uploadDialog = $("#uploadDialog");
 
     function loadState() {
+      state.communityPosts = JSON.parse(localStorage.getItem(COMMUNITY_KEY) || "[]");
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return;
       try {
         const data = JSON.parse(saved);
-        state.songs = Array.isArray(data.songs) ? data.songs : [];
+        state.songs = Array.isArray(data.songs) ? data.songs.map(({ bpm, ...song }) => song) : [];
         state.setlist = Array.isArray(data.setlist) ? data.setlist : [];
         state.selectedId = data.selectedId || null;
         state.serviceName = data.serviceName || "";
@@ -960,34 +315,48 @@
         showToast("저장된 데이터를 불러오지 못했습니다.");
       }
     }
-
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        songs: state.songs,
-        setlist: state.setlist,
-        selectedId: state.selectedId,
-        serviceName: state.serviceName
+        songs: state.songs, setlist: state.setlist, selectedId: state.selectedId, serviceName: state.serviceName
       }));
+      localStorage.setItem(COMMUNITY_KEY, JSON.stringify(state.communityPosts));
     }
-
-    function openUpload() {
-      uploadDialog.classList.add("open");
-      uploadDialog.setAttribute("aria-hidden", "false");
-      $("#title").focus();
-    }
-
-    function closeUpload() {
-      uploadDialog.classList.remove("open");
-      uploadDialog.setAttribute("aria-hidden", "true");
-    }
-
     function showToast(message) {
       toastEl.textContent = message;
       toastEl.classList.add("show");
       clearTimeout(showToast.timer);
       showToast.timer = setTimeout(() => toastEl.classList.remove("show"), 1800);
     }
-
+    function resetForm() {
+      $("#songForm").reset();
+      $("#editingId").value = "";
+      $("#uploadTitle").textContent = "악보 올리기";
+      $("#submitSong").textContent = "악보 추가";
+      $("#fileHint").textContent = "파일은 이 브라우저에 저장됩니다. 수정할 때 새 파일을 고르지 않으면 기존 악보 파일이 유지됩니다.";
+      $("#scoreFile").required = true;
+    }
+    function openUpload(songId = "") {
+      resetForm();
+      const song = state.songs.find((item) => item.id === songId);
+      if (song) {
+        $("#editingId").value = song.id;
+        $("#title").value = song.title || "";
+        $("#key").value = song.key || "C";
+        $("#theme").value = song.theme || "";
+        $("#level").value = song.level || "보통";
+        $("#memo").value = song.memo || "";
+        $("#uploadTitle").textContent = "악보 수정";
+        $("#submitSong").textContent = "수정 저장";
+        $("#scoreFile").required = false;
+      }
+      uploadDialog.classList.add("open");
+      uploadDialog.setAttribute("aria-hidden", "false");
+      $("#title").focus();
+    }
+    function closeUpload() {
+      uploadDialog.classList.remove("open");
+      uploadDialog.setAttribute("aria-hidden", "true");
+    }
     function fileToDataUrl(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -996,16 +365,9 @@
         reader.readAsDataURL(file);
       });
     }
-
     function formatMeta(song) {
-      return [
-        song.key && `${song.key} key`,
-        song.bpm && `${song.bpm} BPM`,
-        song.theme,
-        song.level
-      ].filter(Boolean);
+      return [song.key && `${song.key} key`, song.theme, song.level].filter(Boolean);
     }
-
     function filteredSongs() {
       const term = $("#search").value.trim().toLowerCase();
       const key = $("#keyFilter").value;
@@ -1015,74 +377,56 @@
         const themeMatch = state.themeFilter === "all" || [song.theme, song.memo, song.title].join(" ").includes(state.themeFilter);
         return (key === "all" || song.key === key) && themeMatch && (!term || haystack.includes(term));
       });
-
       songs.sort((a, b) => {
         if (sortBy === "title") return a.title.localeCompare(b.title, "ko");
         if (sortBy === "recent") return b.createdAt - a.createdAt;
         return KEY_ORDER.indexOf(a.key) - KEY_ORDER.indexOf(b.key) || a.title.localeCompare(b.title, "ko");
       });
-
       return songs;
     }
-
     function renderFilters() {
       const current = $("#keyFilter").value || "all";
-      $("#keyFilter").innerHTML = '<option value="all">전체 코드</option>' + KEY_ORDER
-        .map((key) => `<option value="${key}">${key}</option>`)
-        .join("");
+      $("#keyFilter").innerHTML = '<option value="all">전체 코드</option>' + KEY_ORDER.map((key) => `<option value="${key}">${key}</option>`).join("");
       $("#keyFilter").value = current;
-
       $("#keyChips").innerHTML = ['<button class="key-chip active" type="button" data-key="all">전체</button>']
-        .concat(KEY_ORDER.map((key) => `<button class="key-chip" type="button" data-key="${key}">${key}</button>`))
-        .join("");
+        .concat(KEY_ORDER.map((key) => `<button class="key-chip" type="button" data-key="${key}">${key}</button>`)).join("");
       updateKeyChips();
     }
-
     function updateKeyChips() {
       document.querySelectorAll(".key-chip").forEach((chip) => {
         chip.classList.toggle("active", chip.dataset.key === $("#keyFilter").value);
       });
     }
-
     function renderStats() {
       $("#statSongs").textContent = state.songs.length;
       $("#statSetlist").textContent = state.setlist.length;
       $("#songCount").textContent = `총 ${filteredSongs().length}개`;
     }
-
     function renderSongs() {
       renderStats();
       const songs = filteredSongs();
-
       if (!songs.length) {
         songBoard.innerHTML = '<div class="empty">아직 등록된 악보가 없습니다. 상단의 “악보 올리기”로 PDF나 이미지를 추가해 주세요.</div>';
         return;
       }
-
       const groups = songs.reduce((acc, song) => {
         acc[song.key] = acc[song.key] || [];
         acc[song.key].push(song);
         return acc;
       }, {});
-
-      const groupKeys = Object.keys(groups).sort((a, b) => KEY_ORDER.indexOf(a) - KEY_ORDER.indexOf(b));
-      songBoard.innerHTML = groupKeys.map((key) => `
+      songBoard.innerHTML = Object.keys(groups).sort((a, b) => KEY_ORDER.indexOf(a) - KEY_ORDER.indexOf(b)).map((key) => `
         <div class="code-group">
           <h3 class="code-head"><span class="code-badge">${key}</span><span>${key} 코드 악보</span></h3>
-          <div class="song-list">
-            ${groups[key].map(songCard).join("")}
-          </div>
+          <div class="song-list">${groups[key].map(songCard).join("")}</div>
         </div>
       `).join("");
     }
-
     function songCard(song) {
       const meta = formatMeta(song).map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join("");
       const isImage = song.fileType && song.fileType.startsWith("image/");
       const thumb = isImage
         ? `<img alt="${escapeHtml(song.title)} 악보 이미지" src="${song.fileData}">`
         : `<div class="thumb-placeholder"><strong>♪</strong><span>${song.fileType === "application/pdf" ? "PDF 악보" : "악보 이미지"}</span></div>`;
-
       return `
         <article class="song-card">
           <div class="thumb">${thumb}</div>
@@ -1092,6 +436,7 @@
             ${song.memo ? `<div class="song-memo">${escapeHtml(song.memo)}</div>` : ""}
             <div class="row-actions">
               <button class="btn btn-soft" type="button" data-action="preview" data-id="${song.id}">보기</button>
+              <button class="btn btn-ghost" type="button" data-action="edit-song" data-id="${song.id}">수정</button>
               <button class="btn btn-primary" type="button" data-action="add-set" data-id="${song.id}">콘티 추가</button>
               <button class="btn btn-danger" type="button" data-action="delete-song" data-id="${song.id}">삭제</button>
             </div>
@@ -1099,7 +444,6 @@
         </article>
       `;
     }
-
     function renderPreview() {
       const song = state.songs.find((item) => item.id === state.selectedId);
       if (!song) {
@@ -1108,42 +452,26 @@
         previewFrame.innerHTML = '<div class="empty">아직 선택한 악보가 없습니다.</div>';
         return;
       }
-
       $("#previewTitle").textContent = song.title;
       $("#previewMeta").textContent = formatMeta(song).join(" · ") || "세부 정보 없음";
-      const isPdf = song.fileType === "application/pdf";
-      previewFrame.innerHTML = isPdf
+      previewFrame.innerHTML = song.fileType === "application/pdf"
         ? `<iframe title="${escapeHtml(song.title)} 악보" src="${song.fileData}"></iframe>`
         : `<img alt="${escapeHtml(song.title)} 악보" src="${song.fileData}">`;
     }
-
     function renderSetlist() {
       const validIds = new Set(state.songs.map((song) => song.id));
       state.setlist = state.setlist.filter((id) => validIds.has(id));
       const songs = state.setlist.map((id) => state.songs.find((song) => song.id === id)).filter(Boolean);
-      const bpmSongs = songs.filter((song) => Number(song.bpm));
-      const avgBpm = bpmSongs.length
-        ? Math.round(bpmSongs.reduce((sum, song) => sum + Number(song.bpm), 0) / bpmSongs.length)
-        : null;
-
-      $("#setSummary").innerHTML = `
-        <span class="pill">${songs.length}곡</span>
-        <span class="pill">${avgBpm ? `평균 ${avgBpm} BPM` : "BPM 미입력"}</span>
-      `;
-
+      $("#setSummary").innerHTML = `<span class="pill">${songs.length}곡</span>`;
       if (!songs.length) {
         setlistEl.innerHTML = '<div class="empty">악보 카드에서 “콘티 추가”를 누르면 순서대로 담깁니다.</div>';
         saveState();
         return;
       }
-
       setlistEl.innerHTML = songs.map((song, index) => `
         <article class="set-card">
           <span class="set-number">${index + 1}</span>
-          <div>
-            <div class="song-name">${escapeHtml(song.title)}</div>
-            <div class="meta">${formatMeta(song).map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join("")}</div>
-          </div>
+          <div><div class="song-name">${escapeHtml(song.title)}</div><div class="meta">${formatMeta(song).map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join("")}</div></div>
           <div class="row-actions">
             <button class="btn btn-ghost" type="button" data-action="move-up" data-index="${index}">위로</button>
             <button class="btn btn-ghost" type="button" data-action="move-down" data-index="${index}">아래로</button>
@@ -1154,23 +482,21 @@
       `).join("");
       saveState();
     }
-
     function render() {
       renderSongs();
       renderPreview();
       renderSetlist();
+      renderCommunity();
       renderStats();
       updateKeyChips();
       saveState();
     }
-
     function addToSetlist(id) {
       state.setlist.push(id);
       state.selectedId = id;
       render();
       showToast("콘티에 추가했습니다.");
     }
-
     function deleteSong(id) {
       const song = state.songs.find((item) => item.id === id);
       if (!song || !confirm(`"${song.title}" 악보를 삭제할까요?`)) return;
@@ -1180,7 +506,6 @@
       render();
       showToast("악보를 삭제했습니다.");
     }
-
     function moveSetItem(index, direction) {
       const nextIndex = index + direction;
       if (nextIndex < 0 || nextIndex >= state.setlist.length) return;
@@ -1189,108 +514,168 @@
       state.setlist = copy;
       render();
     }
-
     function exportSetlist() {
       const songs = state.setlist.map((id) => state.songs.find((song) => song.id === id)).filter(Boolean);
       if (!songs.length) {
         showToast("복사할 콘티가 없습니다.");
         return;
       }
-
       const title = state.serviceName.trim() || "예배 콘티";
-      const text = [
-        title,
+      const text = [title, "", ...songs.map((song, index) => `${index + 1}. ${song.title} (${song.key} key)${song.memo ? ` - ${song.memo}` : ""}`)].join("\n");
+      navigator.clipboard.writeText(text).then(() => showToast("콘티를 클립보드에 복사했습니다.")).catch(() => prompt("콘티를 복사하세요.", text));
+    }
+    function downloadSetlistScores() {
+      const songs = state.setlist.map((id) => state.songs.find((song) => song.id === id)).filter(Boolean);
+      if (!songs.length) {
+        showToast("다운로드할 콘티 악보가 없습니다.");
+        return;
+      }
+      const serviceName = sanitizeFileName(state.serviceName.trim() || "예배콘티");
+      const summary = [
+        state.serviceName.trim() || "예배 콘티",
         "",
-        ...songs.map((song, index) => `${index + 1}. ${song.title} (${song.key} key${song.bpm ? `, ${song.bpm} BPM` : ""})${song.memo ? ` - ${song.memo}` : ""}`)
+        ...songs.map((song, index) => `${index + 1}. ${song.title} (${song.key} key)${song.memo ? ` - ${song.memo}` : ""}`)
       ].join("\n");
-
-      navigator.clipboard.writeText(text)
-        .then(() => showToast("콘티를 클립보드에 복사했습니다."))
-        .catch(() => {
-          prompt("콘티를 복사하세요.", text);
-        });
+      downloadText(`${serviceName}-목록.txt`, summary);
+      songs.forEach((song, index) => {
+        setTimeout(() => {
+          const extension = fileExtension(song);
+          const name = `${String(index + 1).padStart(2, "0")}-${sanitizeFileName(song.title)}-${song.key}${extension}`;
+          downloadDataUrl(name, song.fileData);
+        }, 180 * (index + 1));
+      });
+      showToast("콘티 목록과 악보 다운로드를 시작했습니다.");
     }
-
+    function fileExtension(song) {
+      const fromName = song.fileName && song.fileName.includes(".") ? song.fileName.slice(song.fileName.lastIndexOf(".")) : "";
+      if (fromName) return fromName;
+      if (song.fileType === "application/pdf") return ".pdf";
+      if (song.fileType === "image/png") return ".png";
+      if (song.fileType === "image/webp") return ".webp";
+      return ".jpg";
+    }
+    function sanitizeFileName(value) {
+      return String(value || "악보").replace(/[\\/:*?"<>|]/g, "-").replace(/\s+/g, " ").trim().slice(0, 80) || "악보";
+    }
+    function downloadDataUrl(filename, dataUrl) {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+    function downloadText(filename, text) {
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      downloadDataUrl(filename, url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    function renderCommunity() {
+      const posts = [...state.communityPosts].sort((a, b) => b.createdAt - a.createdAt);
+      if (!posts.length) {
+        $("#communityPosts").innerHTML = '<div class="empty">아직 남겨진 글이 없습니다. 첫 나눔을 남겨보세요.</div>';
+        return;
+      }
+      $("#communityPosts").innerHTML = posts.map((post) => `
+        <article class="community-post">
+          <div class="post-top">
+            <span><span class="post-author">${escapeHtml(post.name)}</span> · ${escapeHtml(post.topic)}</span>
+            <span>${new Date(post.createdAt).toLocaleString("ko-KR")}</span>
+          </div>
+          <div class="post-message">${escapeHtml(post.message)}</div>
+        </article>
+      `).join("");
+    }
+    function addCommunityPost(event) {
+      event.preventDefault();
+      const message = $("#communityMessage").value.trim();
+      if (!message) return;
+      state.communityPosts.push({
+        id: crypto.randomUUID(),
+        name: $("#communityName").value.trim() || "익명",
+        topic: $("#communityTopic").value,
+        message,
+        createdAt: Date.now()
+      });
+      $("#communityMessage").value = "";
+      saveState();
+      renderCommunity();
+      showToast("커뮤니티 글을 남겼습니다.");
+    }
     function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+      return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
     }
-
     $("#songForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const file = $("#scoreFile").files[0];
-      if (!file) return;
-
-      if (file.type !== "application/pdf" && !file.type.startsWith("image/")) {
+      const editingId = $("#editingId").value;
+      const existing = state.songs.find((song) => song.id === editingId);
+      if (!file && !existing) {
+        showToast("PDF 또는 이미지 악보를 선택해 주세요.");
+        return;
+      }
+      if (file && file.type !== "application/pdf" && !file.type.startsWith("image/")) {
         showToast("PDF 또는 이미지 파일만 올릴 수 있습니다.");
         return;
       }
-
       try {
-        const fileData = await fileToDataUrl(file);
-        const song = {
-          id: crypto.randomUUID(),
+        const nextFile = file ? {
+          fileName: file.name,
+          fileType: file.type,
+          fileData: await fileToDataUrl(file)
+        } : {
+          fileName: existing.fileName,
+          fileType: existing.fileType,
+          fileData: existing.fileData
+        };
+        const nextSong = {
+          id: existing ? existing.id : crypto.randomUUID(),
           title: $("#title").value.trim(),
           key: $("#key").value,
-          bpm: $("#bpm").value.trim(),
           theme: $("#theme").value.trim(),
           level: $("#level").value,
           memo: $("#memo").value.trim(),
-          fileName: file.name,
-          fileType: file.type,
-          fileData,
-          createdAt: Date.now()
+          createdAt: existing ? existing.createdAt : Date.now(),
+          updatedAt: Date.now(),
+          ...nextFile
         };
-
-        state.songs.push(song);
-        state.selectedId = song.id;
-        event.target.reset();
-        $("#key").value = song.key;
+        if (existing) {
+          state.songs = state.songs.map((song) => song.id === existing.id ? nextSong : song);
+          showToast("악보를 수정했습니다.");
+        } else {
+          state.songs.push(nextSong);
+          state.setlist.push(nextSong.id);
+          showToast("악보를 추가했습니다.");
+        }
+        state.selectedId = nextSong.id;
         closeUpload();
+        resetForm();
         render();
-        showToast("악보를 추가했습니다.");
       } catch {
         showToast("파일을 불러오지 못했습니다.");
       }
     });
-
     songBoard.addEventListener("click", (event) => {
       const button = event.target.closest("button");
       if (!button) return;
       const id = button.dataset.id;
-      if (button.dataset.action === "preview") {
-        state.selectedId = id;
-        render();
-      }
+      if (button.dataset.action === "preview") { state.selectedId = id; render(); }
+      if (button.dataset.action === "edit-song") openUpload(id);
       if (button.dataset.action === "add-set") addToSetlist(id);
       if (button.dataset.action === "delete-song") deleteSong(id);
     });
-
     setlistEl.addEventListener("click", (event) => {
       const button = event.target.closest("button");
       if (!button) return;
       const index = Number(button.dataset.index);
-      if (button.dataset.action === "preview") {
-        state.selectedId = button.dataset.id;
-        render();
-      }
-      if (button.dataset.action === "remove-set") {
-        state.setlist.splice(index, 1);
-        render();
-      }
+      if (button.dataset.action === "preview") { state.selectedId = button.dataset.id; render(); }
+      if (button.dataset.action === "remove-set") { state.setlist.splice(index, 1); render(); }
       if (button.dataset.action === "move-up") moveSetItem(index, -1);
       if (button.dataset.action === "move-down") moveSetItem(index, 1);
     });
-
     $("#search").addEventListener("input", renderSongs);
-    $("#keyFilter").addEventListener("change", () => {
-      updateKeyChips();
-      renderSongs();
-    });
+    $("#keyFilter").addEventListener("change", () => { updateKeyChips(); renderSongs(); });
     $("#sortBy").addEventListener("change", renderSongs);
     $("#keyChips").addEventListener("click", (event) => {
       const chip = event.target.closest(".key-chip");
@@ -1306,16 +691,18 @@
         renderSongs();
       });
     });
-    $("#serviceName").addEventListener("input", (event) => {
-      state.serviceName = event.target.value;
-      saveState();
-    });
-    $("#clearSetlist").addEventListener("click", () => {
-      state.setlist = [];
-      render();
-      showToast("콘티를 비웠습니다.");
-    });
+    $("#serviceName").addEventListener("input", (event) => { state.serviceName = event.target.value; saveState(); });
+    $("#clearSetlist").addEventListener("click", () => { state.setlist = []; render(); showToast("콘티를 비웠습니다."); });
+    $("#downloadSetlist").addEventListener("click", downloadSetlistScores);
     $("#exportSetlist").addEventListener("click", exportSetlist);
+    $("#communityForm").addEventListener("submit", addCommunityPost);
+    $("#clearCommunity").addEventListener("click", () => {
+      if (!confirm("커뮤니티 글을 모두 지울까요?")) return;
+      state.communityPosts = [];
+      saveState();
+      renderCommunity();
+      showToast("커뮤니티 글을 모두 지웠습니다.");
+    });
     $("#clearAll").addEventListener("click", () => {
       if (!confirm("모든 악보와 콘티를 삭제할까요?")) return;
       state.songs = [];
@@ -1326,17 +713,12 @@
       render();
       showToast("전체 데이터를 비웠습니다.");
     });
-    $("#openUploadTop").addEventListener("click", openUpload);
-    $("#openUploadHero").addEventListener("click", openUpload);
+    $("#openUploadTop").addEventListener("click", () => openUpload());
+    $("#openUploadHero").addEventListener("click", () => openUpload());
     $("#closeUpload").addEventListener("click", closeUpload);
     $("#cancelUpload").addEventListener("click", closeUpload);
-    uploadDialog.addEventListener("click", (event) => {
-      if (event.target === uploadDialog) closeUpload();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeUpload();
-    });
-
+    uploadDialog.addEventListener("click", (event) => { if (event.target === uploadDialog) closeUpload(); });
+    document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeUpload(); });
     loadState();
     renderFilters();
     render();
