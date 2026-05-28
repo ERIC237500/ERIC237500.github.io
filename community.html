@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>커뮤니티 | WE R WORSHIPER</title>
+  <style>
+    :root {
+      --navy: #0d263c;
+      --cyan: #05b9d6;
+      --pink: #f72575;
+      --ink: #102033;
+      --muted: #66758a;
+      --line: #e2e8f0;
+      --surface: #f7f9fc;
+      --soft-cyan: #e8fbff;
+      --soft-pink: #fff0f6;
+      font-family: "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--surface); color: var(--ink); }
+    button, input, select, textarea { font: inherit; }
+    button { border: 0; cursor: pointer; }
+    .topbar {
+      min-height: 52px; background: #fff; border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: space-between; gap: 18px;
+      padding: 8px clamp(18px, 8vw, 330px); position: sticky; top: 0; z-index: 10;
+    }
+    .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 950; white-space: nowrap; color: var(--ink); text-decoration: none; }
+    .logo svg { width: 38px; height: 38px; flex: 0 0 auto; }
+    .nav { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .nav a { color: #5f6c7d; text-decoration: none; padding: 9px 13px; border-radius: 4px; font-size: 14px; font-weight: 850; }
+    .nav a.active { background: var(--soft-cyan); color: #0098b2; }
+    .hero {
+      min-height: 280px; display: grid; place-items: center; padding: 46px 20px; color: #fff;
+      background-color: var(--navy);
+      background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,.15) 1px, transparent 0),
+        linear-gradient(100deg, rgba(15,35,62,.95), rgba(15,71,104,.92));
+      background-size: 32px 32px, auto;
+    }
+    .hero-inner { width: min(100%, 900px); }
+    .eyebrow { margin: 0 0 12px; color: #00d2ee; font-weight: 950; }
+    h1 { margin: 0; font-size: clamp(38px, 5vw, 60px); line-height: 1.15; font-weight: 950; letter-spacing: 0; }
+    .hero p:not(.eyebrow) { max-width: 680px; margin: 18px 0 0; color: #d6e2ef; font-size: 17px; line-height: 1.7; }
+    .page {
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 42px 20px 70px;
+      display: grid;
+      gap: 24px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 12px 32px rgba(15,23,42,.08);
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    h2 { margin: 0; font-size: 21px; letter-spacing: 0; }
+    .hint { color: var(--muted); font-size: 13px; line-height: 1.45; margin-top: 5px; }
+    .panel-body { padding: 18px; display: grid; gap: 14px; }
+    .community-form { display: grid; gap: 12px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    label { display: grid; gap: 7px; color: #31445a; font-size: 13px; font-weight: 900; }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+      padding: 11px 12px;
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(5,185,214,.14); }
+    .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .btn {
+      min-height: 40px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+      gap: 8px; padding: 10px 16px; font-weight: 900; white-space: nowrap; text-decoration: none;
+    }
+    .btn-primary { background: var(--pink); color: #fff; box-shadow: 0 8px 20px rgba(247,37,117,.28); }
+    .btn-ghost { background: #fff; border: 1px solid var(--line); color: #385064; }
+    .posts { display: grid; gap: 12px; }
+    .post {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 14px;
+      background: #fff;
+      display: grid;
+      gap: 8px;
+    }
+    .post-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
+    .post-author { color: var(--ink); font-weight: 950; }
+    .post-topic { border-radius: 999px; background: var(--soft-cyan); color: #008da7; padding: 4px 9px; font-weight: 900; }
+    .post-message { line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .empty { padding: 28px 16px; text-align: center; color: #8a96a8; line-height: 1.5; font-size: 14px; }
+    .toast {
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+      background: #102033; color: #fff; padding: 10px 14px; border-radius: 5px;
+      font-weight: 900; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 40;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, -6px); }
+    @media (max-width: 760px) {
+      .topbar { align-items: flex-start; flex-wrap: wrap; }
+      .nav { order: 3; width: 100%; overflow: auto; }
+      .grid-2 { grid-template-columns: 1fr; }
+      .post-top { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="32" cy="32" r="27" fill="#fff" stroke="#09a7a7" stroke-width="5"/>
+        <circle cx="32" cy="32" r="20" fill="none" stroke="#cf3f93" stroke-width="3" opacity=".9"/>
+        <text x="32" y="42" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="31" font-weight="950" fill="#102033">R</text>
+      </svg>
+      <span>WE R WORSHIPER</span>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="index.html#home">홈</a>
+      <a href="index.html#scores">코드별 보기</a>
+      <a href="index.html#setlist">예배 콘티</a>
+      <a class="active" href="community.html">커뮤니티</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">WE R WORSHIPER</p>
+      <h1>커뮤니티</h1>
+      <p>찬양팀 공지, 예배 준비 요청, 기도제목과 나눔을 한곳에 남겨보세요. 이 글들은 Firebase에 저장되어 모두가 함께 볼 수 있습니다.</p>
+    </div>
+  </section>
+
+  <main class="page">
+    <section class="card">
+      <div class="panel-head">
+        <div>
+          <h2>글 남기기</h2>
+          <div class="hint">함께 확인할 내용을 짧고 분명하게 남겨주세요.</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form class="community-form" id="communityForm">
+          <div class="grid-2">
+            <label>이름<input id="communityName" placeholder="예: 찬양팀"></label>
+            <label>분류
+              <select id="communityTopic">
+                <option>공지</option>
+                <option>요청</option>
+                <option>기도제목</option>
+                <option>나눔</option>
+              </select>
+            </label>
+          </div>
+          <label>내용<textarea id="communityMessage" required placeholder="함께 나눌 내용을 적어주세요."></textarea></label>
+          <div class="actions">
+            <button class="btn btn-primary" type="submit">글 남기기</button>
+            <button class="btn btn-ghost" id="clearCommunity" type="button">글 모두 지우기</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="panel-head">
+        <div>
+          <h2>나눔 게시판</h2>
+          <div class="hint" id="postCount">0개의 글</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="posts" id="communityPosts"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import { addDoc, collection, deleteDoc, doc, getFirestore, onSnapshot, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDKgAIbttJ3qvXiSeySpNFHMekpmKygtdY",
+      authDomain: "praise-1498a.firebaseapp.com",
+      projectId: "praise-1498a",
+      storageBucket: "praise-1498a.firebasestorage.app",
+      messagingSenderId: "469290786550",
+      appId: "1:469290786550:web:efcea9a9268915ce5416d7",
+      measurementId: "G-L5S52S9TBJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const communityRef = collection(db, "communityPosts");
+    const postsEl = document.querySelector("#communityPosts");
+    const toastEl = document.querySelector("#toast");
+    let posts = [];
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("show");
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => toastEl.classList.remove("show"), 2200);
+    }
+
+    function renderPosts() {
+      document.querySelector("#postCount").textContent = `${posts.length}개의 글`;
+      if (!posts.length) {
+        postsEl.innerHTML = '<div class="empty">아직 남겨진 글이 없습니다. 첫 나눔을 남겨보세요.</div>';
+        return;
+      }
+      postsEl.innerHTML = posts.map((post) => `
+        <article class="post">
+          <div class="post-top">
+            <span><span class="post-author">${escapeHtml(post.name)}</span> · <span class="post-topic">${escapeHtml(post.topic)}</span></span>
+            <span>${new Date(post.createdAt || Date.now()).toLocaleString("ko-KR")}</span>
+          </div>
+          <div class="post-message">${escapeHtml(post.message)}</div>
+        </article>
+      `).join("");
+    }
+
+    async function addPost(event) {
+      event.preventDefault();
+      const message = document.querySelector("#communityMessage").value.trim();
+      if (!message) return;
+      try {
+        await addDoc(communityRef, {
+          name: document.querySelector("#communityName").value.trim() || "익명",
+          topic: document.querySelector("#communityTopic").value,
+          message,
+          createdAt: Date.now()
+        });
+        document.querySelector("#communityMessage").value = "";
+        showToast("커뮤니티 글을 남겼습니다.");
+      } catch {
+        showToast("커뮤니티 글 저장에 실패했습니다.");
+      }
+    }
+
+    async function clearPosts() {
+      if (!confirm("커뮤니티 글을 모두 지울까요?")) return;
+      try {
+        await Promise.all(posts.map((post) => deleteDoc(doc(db, "communityPosts", post.id))));
+        showToast("커뮤니티 글을 모두 지웠습니다.");
+      } catch {
+        showToast("커뮤니티 글 삭제에 실패했습니다.");
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelector("#communityForm").addEventListener("submit", addPost);
+    document.querySelector("#clearCommunity").addEventListener("click", clearPosts);
+
+    onSnapshot(query(communityRef, orderBy("createdAt", "desc")), (snapshot) => {
+      posts = snapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+      renderPosts();
+    }, () => {
+      showToast("커뮤니티 데이터를 불러오지 못했습니다.");
+    });
+  </script>
+</body>
+</html>
