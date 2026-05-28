@@ -100,7 +100,7 @@
     .song-name { font-size: 16px; font-weight: 950; line-height: 1.25; overflow-wrap: anywhere; }
     .meta { display: flex; flex-wrap: wrap; gap: 6px; color: var(--muted); font-size: 12px; }
     .song-memo { color: #6d7888; font-size: 13px; line-height: 1.45; }
-    .setlist-card, .preview-card, .community-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(15,23,42,.08); overflow: hidden; }
+    .setlist-card, .preview-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 12px 32px rgba(15,23,42,.08); overflow: hidden; }
     .panel-head { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .panel-body { padding: 16px; display: grid; gap: 14px; }
     .set-summary { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -120,13 +120,6 @@
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .file-drop { border: 1px dashed #a8b7c8; border-radius: 7px; padding: 14px; background: #f8fbff; }
     .hint { color: var(--muted); font-size: 13px; line-height: 1.45; }
-    .community-card { margin-top: 28px; }
-    .community-form { display: grid; gap: 12px; }
-    .community-posts { display: grid; gap: 12px; }
-    .community-post { border: 1px solid var(--line); border-radius: 7px; padding: 12px; background: #fff; display: grid; gap: 8px; }
-    .post-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: var(--muted); font-size: 12px; }
-    .post-author { color: var(--ink); font-weight: 950; }
-    .post-message { line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere; }
     .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: #102033; color: #fff; padding: 10px 14px; border-radius: 5px; font-weight: 900; opacity: 0; pointer-events: none; transition: opacity .2s ease, transform .2s ease; z-index: 40; }
     .toast.show { opacity: 1; transform: translate(-50%, -6px); }
     @media (max-width: 1180px) {
@@ -159,7 +152,6 @@
       <a class="active" href="#home">홈</a>
       <a href="#scores">코드별 보기</a>
       <a href="#setlist">예배 콘티</a>
-      <a href="#community">커뮤니티</a>
     </nav>
     <button class="btn btn-primary" id="openUploadTop" type="button">↥ 악보 올리기</button>
   </header>
@@ -212,36 +204,6 @@
         <select id="sortBy"><option value="key">코드순</option><option value="title">제목순</option><option value="recent">최근 추가순</option></select>
       </div>
       <section class="song-board" id="songBoard"></section>
-      <section class="community-card" id="community">
-        <div class="panel-head">
-          <div>
-            <h2>커뮤니티</h2>
-            <div class="hint">찬양팀과 나눌 공지, 요청, 준비 메모를 남겨보세요.</div>
-          </div>
-        </div>
-        <div class="panel-body">
-          <form class="community-form" id="communityForm">
-            <div class="grid-2">
-              <label>이름<input id="communityName" placeholder="예: 찬양팀"></label>
-              <label>분류
-                <select id="communityTopic">
-                  <option>공지</option>
-                  <option>요청</option>
-                  <option>기도제목</option>
-                  <option>나눔</option>
-                </select>
-              </label>
-            </div>
-            <label>내용<textarea id="communityMessage" required placeholder="함께 나눌 내용을 적어주세요."></textarea></label>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">글 남기기</button>
-              <button class="btn btn-ghost" id="clearCommunity" type="button">글 모두 지우기</button>
-            </div>
-            <div class="hint">현재 버전의 커뮤니티 글은 이 브라우저에 저장됩니다.</div>
-          </form>
-          <div class="community-posts" id="communityPosts"></div>
-        </div>
-      </section>
     </main>
 
     <aside class="setlist-panel" id="setlist">
@@ -250,11 +212,7 @@
         <div class="panel-body">
           <label>예배 이름<input id="serviceName" placeholder="예: 주일 2부 예배"></label>
           <div class="set-summary" id="setSummary"><span class="pill">0곡</span></div>
-          <div class="actions">
-            <button class="btn btn-primary" id="downloadSetlist" type="button">콘티 악보 다운로드</button>
-            <button class="btn btn-soft" id="exportSetlist" type="button">콘티 복사</button>
-            <button class="btn btn-danger" id="clearAll" type="button">전체 비우기</button>
-          </div>
+          <div class="actions"><button class="btn btn-primary" id="exportSetlist" type="button">콘티 복사</button><button class="btn btn-danger" id="clearAll" type="button">전체 비우기</button></div>
           <div class="setlist" id="setlistItems"></div>
         </div>
       </section>
@@ -291,8 +249,7 @@
   <script>
     const KEY_ORDER = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
     const STORAGE_KEY = "worship-score-board";
-    const COMMUNITY_KEY = "worship-community-posts";
-    const state = { songs: [], setlist: [], selectedId: null, serviceName: "", themeFilter: "all", communityPosts: [] };
+    const state = { songs: [], setlist: [], selectedId: null, serviceName: "", themeFilter: "all" };
     const $ = (selector) => document.querySelector(selector);
     const songBoard = $("#songBoard");
     const setlistEl = $("#setlistItems");
@@ -301,7 +258,6 @@
     const uploadDialog = $("#uploadDialog");
 
     function loadState() {
-      state.communityPosts = JSON.parse(localStorage.getItem(COMMUNITY_KEY) || "[]");
       const saved = localStorage.getItem(STORAGE_KEY);
       if (!saved) return;
       try {
@@ -319,7 +275,6 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
         songs: state.songs, setlist: state.setlist, selectedId: state.selectedId, serviceName: state.serviceName
       }));
-      localStorage.setItem(COMMUNITY_KEY, JSON.stringify(state.communityPosts));
     }
     function showToast(message) {
       toastEl.textContent = message;
@@ -486,7 +441,6 @@
       renderSongs();
       renderPreview();
       renderSetlist();
-      renderCommunity();
       renderStats();
       updateKeyChips();
       saveState();
@@ -523,85 +477,6 @@
       const title = state.serviceName.trim() || "예배 콘티";
       const text = [title, "", ...songs.map((song, index) => `${index + 1}. ${song.title} (${song.key} key)${song.memo ? ` - ${song.memo}` : ""}`)].join("\n");
       navigator.clipboard.writeText(text).then(() => showToast("콘티를 클립보드에 복사했습니다.")).catch(() => prompt("콘티를 복사하세요.", text));
-    }
-    function downloadSetlistScores() {
-      const songs = state.setlist.map((id) => state.songs.find((song) => song.id === id)).filter(Boolean);
-      if (!songs.length) {
-        showToast("다운로드할 콘티 악보가 없습니다.");
-        return;
-      }
-      const serviceName = sanitizeFileName(state.serviceName.trim() || "예배콘티");
-      const summary = [
-        state.serviceName.trim() || "예배 콘티",
-        "",
-        ...songs.map((song, index) => `${index + 1}. ${song.title} (${song.key} key)${song.memo ? ` - ${song.memo}` : ""}`)
-      ].join("\n");
-      downloadText(`${serviceName}-목록.txt`, summary);
-      songs.forEach((song, index) => {
-        setTimeout(() => {
-          const extension = fileExtension(song);
-          const name = `${String(index + 1).padStart(2, "0")}-${sanitizeFileName(song.title)}-${song.key}${extension}`;
-          downloadDataUrl(name, song.fileData);
-        }, 180 * (index + 1));
-      });
-      showToast("콘티 목록과 악보 다운로드를 시작했습니다.");
-    }
-    function fileExtension(song) {
-      const fromName = song.fileName && song.fileName.includes(".") ? song.fileName.slice(song.fileName.lastIndexOf(".")) : "";
-      if (fromName) return fromName;
-      if (song.fileType === "application/pdf") return ".pdf";
-      if (song.fileType === "image/png") return ".png";
-      if (song.fileType === "image/webp") return ".webp";
-      return ".jpg";
-    }
-    function sanitizeFileName(value) {
-      return String(value || "악보").replace(/[\\/:*?"<>|]/g, "-").replace(/\s+/g, " ").trim().slice(0, 80) || "악보";
-    }
-    function downloadDataUrl(filename, dataUrl) {
-      const link = document.createElement("a");
-      link.href = dataUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }
-    function downloadText(filename, text) {
-      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      downloadDataUrl(filename, url);
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    }
-    function renderCommunity() {
-      const posts = [...state.communityPosts].sort((a, b) => b.createdAt - a.createdAt);
-      if (!posts.length) {
-        $("#communityPosts").innerHTML = '<div class="empty">아직 남겨진 글이 없습니다. 첫 나눔을 남겨보세요.</div>';
-        return;
-      }
-      $("#communityPosts").innerHTML = posts.map((post) => `
-        <article class="community-post">
-          <div class="post-top">
-            <span><span class="post-author">${escapeHtml(post.name)}</span> · ${escapeHtml(post.topic)}</span>
-            <span>${new Date(post.createdAt).toLocaleString("ko-KR")}</span>
-          </div>
-          <div class="post-message">${escapeHtml(post.message)}</div>
-        </article>
-      `).join("");
-    }
-    function addCommunityPost(event) {
-      event.preventDefault();
-      const message = $("#communityMessage").value.trim();
-      if (!message) return;
-      state.communityPosts.push({
-        id: crypto.randomUUID(),
-        name: $("#communityName").value.trim() || "익명",
-        topic: $("#communityTopic").value,
-        message,
-        createdAt: Date.now()
-      });
-      $("#communityMessage").value = "";
-      saveState();
-      renderCommunity();
-      showToast("커뮤니티 글을 남겼습니다.");
     }
     function escapeHtml(value) {
       return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
@@ -693,16 +568,7 @@
     });
     $("#serviceName").addEventListener("input", (event) => { state.serviceName = event.target.value; saveState(); });
     $("#clearSetlist").addEventListener("click", () => { state.setlist = []; render(); showToast("콘티를 비웠습니다."); });
-    $("#downloadSetlist").addEventListener("click", downloadSetlistScores);
     $("#exportSetlist").addEventListener("click", exportSetlist);
-    $("#communityForm").addEventListener("submit", addCommunityPost);
-    $("#clearCommunity").addEventListener("click", () => {
-      if (!confirm("커뮤니티 글을 모두 지울까요?")) return;
-      state.communityPosts = [];
-      saveState();
-      renderCommunity();
-      showToast("커뮤니티 글을 모두 지웠습니다.");
-    });
     $("#clearAll").addEventListener("click", () => {
       if (!confirm("모든 악보와 콘티를 삭제할까요?")) return;
       state.songs = [];
