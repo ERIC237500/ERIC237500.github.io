@@ -525,7 +525,7 @@
         saveState();
       } catch (error) {
         console.error(error);
-        showToast("저장에 실패했습니다. Firebase 권한을 확인해 주세요.");
+        showToast(`저장 실패: ${error.code || error.message || "Firebase 권한 확인 필요"}`);
       } finally {
         $("#submitSong").disabled = false;
         $("#submitSong").textContent = $("#editingId").value ? "수정 저장" : "악보 추가";
